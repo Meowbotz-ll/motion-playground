@@ -25,12 +25,14 @@ export default function OrientationSquare() {
 	const enableOrientation = async () => {
 		if (
 			typeof DeviceOrientationEvent !== "undefined" &&
-			typeof DeviceOrientationEvent.requestPermission ===
-				"function"
+			"requestPermission" in DeviceOrientationEvent &&
+			typeof (DeviceOrientationEvent as any)
+				.requestPermission === "function"
 		) {
 			try {
-				const response =
-					await DeviceOrientationEvent.requestPermission();
+				const response = await (
+					DeviceOrientationEvent as any
+				).requestPermission();
 				if (response === "granted") {
 					window.addEventListener(
 						"deviceorientation",
